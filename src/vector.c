@@ -25,12 +25,6 @@ Vec3 scalarDivide(Vec3 v, float d){
     return result;
    }
 
-//Vec3 normalize(Vec3 v){
-//	float len = length(v);
-//    	if (len == 0) return v; 
-//    	return scalarDivide(v, len);	
-//};
-
 float dot(Vec3 v1, Vec3 v2){
 	float vdot = v1.x*v2.x + v1.y*v2.y + v1.z*v2.z;
 	return vdot;
