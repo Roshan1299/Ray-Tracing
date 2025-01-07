@@ -14,6 +14,18 @@ This project is a 3D renderer implemented from scratch in C. It uses ray tracing
 
 ---
 
+## Code Structure
+
+The project is organized into multiple files:
+
+- **`vector.c`:** Implements 3D vector operations (addition, subtraction, normalization, etc.).
+- **`spheres.c`:** Handles sphere data and intersection detection.
+- **`color.c`:** Converts HEX colors to RGB and writes colors to the PPM file.
+- **`main.c`:** Contains the main function and rendering logic.
+- **`Makefile`:** Compiles the program and generates executables for different stages of development.
+
+---
+
 ## How It Works
 
 1. **Input:** The program reads a scene description from an input file, including:
@@ -34,13 +46,31 @@ This project is a 3D renderer implemented from scratch in C. It uses ray tracing
 
 ---
 
-## Code Structure
+## Example Input
 
-The project is organized into multiple files:
+640 480
+2.0
+1.0
+20.0 20.0 10.0 1000.0
+4
+0x1188EE 0xDD2266 0xDD7700 0x11CC66
+0
+3
+2.0 0.0 -5.0 2.0 2
+-2.0 0.0 -5.0 2.0 3
+0.0 -102.0 -5.0 100.0 1
 
-- **`vector.c`:** Implements 3D vector operations (addition, subtraction, normalization, etc.).
-- **`spheres.c`:** Handles sphere data and intersection detection.
-- **`color.c`:** Converts HEX colors to RGB and writes colors to the PPM file.
-- **`main.c`:** Contains the main function and rendering logic.
-- **`Makefile`:** Compiles the program and generates executables for different stages of development.
+---
 
+## Example Output
+
+
+
+
+---
+
+## Dependencies
+
+- **C Compiler:** GCC or Clang.
+- **Math Library:** Linked using `-lm` for square root calculations.
+- **Make:** For building the project.
