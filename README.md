@@ -2,8 +2,6 @@
 
 This project is a 3D renderer implemented from scratch in C. It uses ray tracing techniques to generate images of spheres in 3D space, complete with realistic lighting, shadows, and anti-aliasing. The program reads input data describing the scene (camera, light, spheres, and colors) and outputs a rendered image in the PPM format.
 
----
-
 ## Features
 
 - **3D Vector Operations:** Supports addition, subtraction, normalization, dot product, and more for 3D vectors.
@@ -11,8 +9,6 @@ This project is a 3D renderer implemented from scratch in C. It uses ray tracing
 - **Lighting and Shadows:** Simulates light sources and calculates shadows for realistic rendering.
 - **Anti-Aliasing:** Smooths jagged edges by sampling each pixel multiple times.
 - **PPM Image Output:** Renders the final image in the Portable Pixel Map (PPM) format.
-
----
 
 ## Code Structure
 
@@ -23,8 +19,6 @@ The project is organized into multiple files:
 - **`color.c`:** Converts HEX colors to RGB and writes colors to the PPM file.
 - **`main.c`:** Contains the main function and rendering logic.
 - **`Makefile`:** Compiles the program and generates executables for different stages of development.
-
----
 
 ## How It Works
 
@@ -44,8 +38,6 @@ The project is organized into multiple files:
 
 3. **Output:** The final image is saved as a PPM file, which can be viewed using any PPM-compatible image viewer.
 
----
-
 ## Example Input
 
 640 480
@@ -60,14 +52,9 @@ The project is organized into multiple files:
 -2.0 0.0 -5.0 2.0 3
 0.0 -102.0 -5.0 100.0 1
 
----
-
 ## Example Output
 
 
-
-
----
 
 ## Dependencies
 
