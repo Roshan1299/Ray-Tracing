@@ -98,67 +98,6 @@ int main(int argc, char *argv[]) {
 #endif
     viewportWidth = initialize_camera(viewportHeight, focalLength, imageWidth, imageHeight);
 
-#ifdef MS1
-    Vec3 bgColor = {0.0,0.0,0.0};
-    Vec3 result;
-    fprintf(outputFile, "(%0.1f, %0.1f, %0.1f) + (%0.1f, %0.1f, %0.1f) = (%0.1f, %0.1f, %0.1f)\n",
-            bgColor.x, bgColor.y, bgColor.z, lightPosition.x, lightPosition.y, lightPosition.z,
-            (add(bgColor, lightPosition)).x, (add(bgColor, lightPosition)).y, (add(bgColor, lightPosition)).z);
-
-    fprintf(outputFile, "(%0.1f, %0.1f, %0.1f) - (%0.1f, %0.1f, %0.1f) = (%0.1f, %0.1f, %0.1f)\n",
-            bgColor.x, bgColor.y, bgColor.z, lightPosition.x, lightPosition.y, lightPosition.z,
-            (subtract(bgColor, lightPosition)).x, (subtract(bgColor, lightPosition)).y, (subtract(bgColor, lightPosition)).z);
-
-    result = scalarMultiply(viewportWidth, lightPosition);
-    fprintf(outputFile, "2.7 * (%0.1f, %0.1f, %0.1f) = (%0.1f, %0.1f, %0.1f)\n",
-            lightPosition.x, lightPosition.y, lightPosition.z,
-            result.x, result.y, result.z);
-
-    fprintf(outputFile, "normalize(%0.1f, %0.1f, %0.1f) = (%0.1f, %0.1f, %0.1f)\n",
-            lightPosition.x, lightPosition.y, lightPosition.z,
-            (normalize(lightPosition)).x, (normalize(lightPosition)).y, (normalize(lightPosition)).z);
-
-    fprintf(outputFile, "\n");
-
-    for (int i = 0; i < numSpheres; i++) {
-        Sphere *sphere = world.spheres[i];
-
-        result = scalarDivide(sphere->color, sphere->r);
-        fprintf(outputFile, "(%0.1f, %0.1f, %0.1f) / %0.1f = (%0.1f, %0.1f, %0.1f)\n",
-                sphere->color.x, sphere->color.y, sphere->color.z, sphere->r,
-                result.x, result.y, result.z);
-
-        float dotResult = dot(lightPosition, sphere->pos);
-        fprintf(outputFile, "dot((%0.1f, %0.1f, %0.1f), (%0.1f, %0.1f, %0.1f)) = %0.1f\n",
-                lightPosition.x, lightPosition.y, lightPosition.z,
-                sphere->pos.x, sphere->pos.y, sphere->pos.z,
-                dotResult);
-
-        float distanceResult = distance(lightPosition, sphere->pos);
-        fprintf(outputFile, "distance((%0.1f, %0.1f, %0.1f), (%0.1f, %0.1f, %0.1f)) = %0.1f\n",
-                lightPosition.x, lightPosition.y, lightPosition.z,
-                sphere->pos.x, sphere->pos.y, sphere->pos.z,
-                distanceResult);
-
-        float lengthResult = length(sphere->pos);
-        fprintf(outputFile, "length(%0.1f, %0.1f, %0.1f) = %0.1f\n",
-                sphere->pos.x, sphere->pos.y, sphere->pos.z,
-                lengthResult);
-
-
-	if (i < numSpheres - 1) {
-        	fprintf(outputFile, "\n");
-    }
-
-       
-    }
-    for (int i = 0; i < world.size; i++) {
-        free(world.spheres[i]); // Free each sphere
-    }
-    
-#endif
-
-
 #ifdef MS2
     fprintf(outputFile, "P3\n%d %d\n255\n", (int)imageWidth, (int)imageHeight);
     Vec3 cameraPosition = {0.0, 0.0, 0.0};
