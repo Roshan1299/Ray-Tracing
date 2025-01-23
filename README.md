@@ -40,20 +40,23 @@ The project is organized into multiple files:
 
 ## Example Input
 
-640 480
-2.0
-1.0
-20.0 20.0 10.0 1000.0
-4
-0x1188EE 0xDD2266 0xDD7700 0x11CC66
-0
-3
-2.0 0.0 -5.0 2.0 2
--2.0 0.0 -5.0 2.0 3
-0.0 -102.0 -5.0 100.0 1
+640 480<br>
+2.0<br>
+1.0<br>
+20.0 20.0 10.0 1000.0<br>
+4<br>
+0x1188EE 0xDD2266 0xDD7700 0x11CC66<br>
+0<br>
+3<br>
+2.0 0.0 -5.0 2.0 2<br>
+-2.0 0.0 -5.0 2.0 3<br>
+0.0 -102.0 -5.0 100.0 1<br>
 
 ## Example Output
 
+<div style="text-align: center;">
+    <img src="assets/img1.png" alt="Alt Text" width="300">
+</div>
 
 
 ## Dependencies
