@@ -70,101 +70,13 @@ int main(int argc, char *argv[]) {
             return 1;
         }
     }
-#ifdef FS
+
     qsort(colors, numColors, sizeof(unsigned int), compareColor);
-#endif
+
     fscanf(inputFile, "%d", &background_colorIndex);
 
-#ifndef FS
-    World world;
-    worldInit(&world);
-    fscanf(inputFile, "%d", &numSpheres);
-
-    for (int i = 0; i < numSpheres; i++) {
-        Vec3 position;
-        float radius;
-        int colorIndex;
-        if (fscanf(inputFile, "%f %f %f %f %d", &position.x, &position.y, &position.z, &radius, &colorIndex) != 5) {
-        fprintf(stderr, "Error: Failed to read sphere data (position, radius, color index).\n");
-        fclose(inputFile);
-        return 1;
-        }
-
-        Sphere *newSphere = createSphere(radius, position, (Vec3){1.0, 1.0, 1.0});
-        if (newSphere != NULL) {
-            addSphere(&world, newSphere);
-        }
-    }
-#endif
     viewportWidth = initialize_camera(viewportHeight, focalLength, imageWidth, imageHeight);
 
-#ifdef MS2
-    fprintf(outputFile, "P3\n%d %d\n255\n", (int)imageWidth, (int)imageHeight);
-    Vec3 cameraPosition = {0.0, 0.0, 0.0};
-
-    for (int y = imageHeight-1; y >= 0; y--) {
-        for (int x = 0; x < imageWidth; x++) {
-            Vec3 pixelColor = {0.0,0.0,0.0};
-            
-            float closestIntersectionT = INFINITY;
-            Sphere *closestSphere = NULL;
-
-            float u = (x + 0.5) / imageWidth * viewportWidth - (viewportWidth / 2);
-            float v = (y + 0.5) / imageHeight * viewportHeight - (viewportHeight / 2);
-
-            Vec3 rayDirection = normalize((Vec3){u, v, -focalLength});
-
-            for (int i = 0; i < world.size; i++) {
-                float t;
-                if (doesIntersect(world.spheres[i], cameraPosition, rayDirection, &t) && t < closestIntersectionT) {
-                    closestIntersectionT = t;
-                    closestSphere = world.spheres[i];
-                }
-            }
-
-            if (closestSphere != NULL) {
-                Vec3 intersectionPoint = add(cameraPosition, scalarMultiply(closestIntersectionT, rayDirection));
-                Vec3 normal = normalize(subtract(intersectionPoint, closestSphere->pos));
-                Vec3 lightDirection = normalize(subtract(lightPosition, intersectionPoint));
-
-                float lightIntensity = lightBrightness * fmax(0, dot(normal, lightDirection)) /
-                                  pow(distance(lightPosition, intersectionPoint), 2);
-                lightIntensity = fmin(1.0, lightIntensity);
-
-                Vec3 shadowRayOrigin = add(intersectionPoint, scalarMultiply(0.001, normal));
-                int isInShadowed = 0;
-                for (int i = 0; i < world.size; i++) {
-                    if (world.spheres[i] != closestSphere) {
-                        float t;
-                        if (doesIntersect(world.spheres[i], shadowRayOrigin, lightDirection, &t)) {
-                            isInShadowed = 1;
-                            break;
-                        }
-                    }
-                }
-
-                if (isInShadowed) {
-                    lightIntensity *= 0.1; // Shadow factor
-                }
-
-                // Final color
-                pixelColor = scalarMultiply(lightIntensity, closestSphere->color);
-            }
-
-            // Write the color to the file
-            fprintf(outputFile, "%d %d %d ",
-                (int)(pixelColor.x * 255),
-                (int)(pixelColor.y * 255),
-                (int)(pixelColor.z * 255));
-        }
-        fprintf(outputFile, "\n"); // Newline for each row
-    }
-    for (int i = 0; i < world.size; i++) {
-        free(world.spheres[i]); // Free each sphere
-    }
-#endif
-
-#ifdef FS
     World world;
     worldInit(&world);
     fscanf(inputFile, "%d", &numSpheres);
@@ -260,9 +172,6 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < world.size; i++) {
         free(world.spheres[i]); // Free each sphere
     }
-
-
-#endif
     
     free(world.spheres);
     free(colors);
