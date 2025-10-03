@@ -1,66 +1,106 @@
 # Ray Tracing Renderer in C
 
-This project is a 3D renderer implemented from scratch in C. It uses ray tracing techniques to generate images of spheres in 3D space, complete with realistic lighting, shadows, and anti-aliasing. The program reads input data describing the scene (camera, light, spheres, and colors) and outputs a rendered image in the PPM format.
+A 3D ray tracer implemented from scratch in C that generates realistic images of spheres with lighting, shadows, and anti-aliasing. Features automatic image conversion and viewing tools for easy visualization.
+
+## Quick Start
+
+```bash
+# Build and test with sample scene
+make test
+
+# View the generated image
+make view
+
+# Create custom scenes
+make run INPUT=your_scene.txt OUTPUT=my_render.ppm
+```
 
 ## Features
 
-- **3D Vector Operations:** Supports addition, subtraction, normalization, dot product, and more for 3D vectors.
-- **Ray Tracing:** Casts rays from the camera to determine pixel colors based on sphere intersections.
-- **Lighting and Shadows:** Simulates light sources and calculates shadows for realistic rendering.
-- **Anti-Aliasing:** Smooths jagged edges by sampling each pixel multiple times.
-- **PPM Image Output:** Renders the final image in the Portable Pixel Map (PPM) format.
+- **Realistic Rendering**: Ray tracing with diffuse lighting and shadow casting
+- **Anti-Aliasing**: 3×3 supersampling for smooth edges
+- **Easy Viewing**: Automatic PPM to PNG conversion and image viewing
+- **Batch Processing**: Render multiple scenes at once
+- **Clean Architecture**: Modular C code with proper memory management
 
-## Code Structure
+## Usage
 
-The project is organized into multiple files:
+### Basic Rendering
+```bash
+# Generate image from scene file
+./FS_assg input.txt output.ppm
 
-- **`vector.c`:** Implements 3D vector operations (addition, subtraction, normalization, etc.).
-- **`spheres.c`:** Handles sphere data and intersection detection.
-- **`color.c`:** Converts HEX colors to RGB and writes colors to the PPM file.
-- **`main.c`:** Contains the main function and rendering logic.
-- **`Makefile`:** Compiles the program and generates executables for different stages of development.
+# Convert to PNG and view
+python3 view_image.py output.ppm
+```
 
-## How It Works
+### Using Makefile Targets
+```bash
+make test                    # Build, render sample, convert to PNG
+make view                    # View default output.ppm
+make run INPUT=scene.txt OUTPUT=render.ppm  # Custom render
+make view-custom FILE=render.ppm            # View any PPM file
+```
 
-1. **Input:** The program reads a scene description from an input file, including:
-   - Image dimensions (width and height).
-   - Camera and viewport settings (viewport height, focal length).
-   - Light properties (position and brightness).
-   - Sphere data (position, radius, and color).
-   - A list of colors in HEX format.
+### Batch Processing
+```bash
+python3 batch_render.py "*.txt"  # Render all .txt files
+```
 
-2. **Rendering Pipeline:**
-   - For each pixel, a ray is cast from the camera through the viewport.
-   - The program checks for intersections with spheres in the scene.
-   - If a ray intersects a sphere, the color is calculated based on lighting and shadows.
-   - If no intersection occurs, the background color is used.
-   - Anti-aliasing is applied by sampling each pixel multiple times and averaging the results.
+## Input Format
 
-3. **Output:** The final image is saved as a PPM file, which can be viewed using any PPM-compatible image viewer.
+Create scene files with this format:
+```
+<width> <height>           # Image dimensions
+<viewport_height>          # Camera viewport height
+<focal_length>            # Camera focal length
+<light_x> <light_y> <light_z> <brightness>  # Light source
+<num_colors>              # Number of colors
+<color1_hex> <color2_hex> ...  # Color palette
+<background_color_index>  # Background color index
+<num_spheres>             # Number of spheres
+<sphere_x> <sphere_y> <sphere_z> <radius> <color_index>  # Sphere data
+...
+```
 
-## Example Input
-
-640 480<br>
-2.0<br>
-1.0<br>
-20.0 20.0 10.0 1000.0<br>
-4<br>
-0x1188EE 0xDD2266 0xDD7700 0x11CC66<br>
-0<br>
-3<br>
-2.0 0.0 -5.0 2.0 2<br>
--2.0 0.0 -5.0 2.0 3<br>
-0.0 -102.0 -5.0 100.0 1<br>
+**Example scene** (`sample_input.txt`):
+```
+640 480
+2.0
+1.0
+20.0 20.0 10.0 1000.0
+4
+0x1188EE 0xDD2266 0xDD7700 0x11CC66
+0
+3
+2.0 0.0 -5.0 2.0 2
+-2.0 0.0 -5.0 2.0 3
+0.0 -102.0 -5.0 100.0 1
+```
 
 ## Example Output
 
 <div style="text-align: center;">
-    <img src="assets/img1.png" alt="Alt Text" width="300">
+    <img src="assets/img1.png" alt="Ray traced spheres with lighting and shadows" width="400">
 </div>
 
+## Project Structure
+
+- **`src/main.c`** - Main rendering loop and ray casting
+- **`src/vector.c`** - 3D vector mathematics
+- **`src/spheres.c`** - Sphere intersection and world management
+- **`src/color.c`** - Color conversion and PPM output
+- **`ppm_to_png.py`** - PPM to PNG converter
+- **`view_image.py`** - Automatic image viewer
+- **`batch_render.py`** - Batch processing script
 
 ## Dependencies
 
-- **C Compiler:** GCC or Clang.
-- **Math Library:** Linked using `-lm` for square root calculations.
-- **Make:** For building the project.
+- **C Compiler**: GCC or Clang
+- **Python 3**: For image conversion and viewing tools
+- **PIL/Pillow**: Python image processing library
+- **Make**: Build system
+
+## Documentation
+
+See [VIEWING_GUIDE.md](VIEWING_GUIDE.md) for detailed usage instructions and troubleshooting.
