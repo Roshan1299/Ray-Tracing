@@ -1,52 +1,55 @@
-# Prerequisites
-*.d
-
-# Object files
+# Build artifacts
 *.o
-*.ko
-*.obj
-*.elf
-
-# Linker output
-*.ilk
-*.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
+FS_assg
 *.exe
 *.out
-*.app
-*.i*86
-*.x86_64
-*.hex
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+# Generated images
+*.ppm
+*.png
+*.jpg
+*.jpeg
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.bak
+*.backup
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Test outputs
+test_*.ppm
+test_*.png
+debug_*.ppm
+debug_*.png
+
+# Large files
+*.zip
+*.tar.gz
+*.rar
